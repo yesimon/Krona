@@ -117,14 +117,14 @@ then
 	die "Could not enter '$oldPath/taxonomy'. Did you run install.pl?"
 fi
 
-pushd "$taxonomyPath"
+pushd "$taxonomyPath" > /dev/null
 update gi_taxid_nucl.dmp gi_taxid.dat "GI to taxID dump (nucleotide)"
 update gi_taxid_prot.dmp gi_taxid.dat "GI to taxID dump (protein)"
-if [ ! $local -o ! -e names.dmp ]
+if [ -z $local -o ! -e names.dmp ]
 then
 update taxdump.tar taxonomy.tab 'Taxonomy dump'
 fi
-popd
+popd > /dev/null
 
 if [ -e taxdump.tar ]
 then
